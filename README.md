@@ -46,7 +46,7 @@ DATABASE_URL="mysql://root:@127.0.0.1:3306/mon_forum?serverVersion=5.7
 L'étape suivante consiste à créer la base de données. Il faut juste lancer la commande
 
 ```bash
-$ symfony console doctrine:database:install
+$ symfony console doctrine:database:create
 ```
 
 Si symfony CLI n'est pas installé sur votre machine, vous remplacez `symfony console` par `./bin/console`. Cette règle est appliquée pour le reste des commandes ci-dessous.

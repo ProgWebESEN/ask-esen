@@ -1,5 +1,179 @@
 {% extends "base.html.twig" %}
 
+{% block title %}
+    {{ question.titre }}
+{% endblock %}
+
 {% block body %}
+
+<!--======================================
+        START HERO AREA
+======================================-->
+<section class="hero-area bg-white shadow-sm overflow-hidden pt-40px pb-40px">
+    <span class="stroke-shape stroke-shape-1"></span>
+    <span class="stroke-shape stroke-shape-2"></span>
+    <span class="stroke-shape stroke-shape-3"></span>
+    <span class="stroke-shape stroke-shape-4"></span>
+    <span class="stroke-shape stroke-shape-5"></span>
+    <span class="stroke-shape stroke-shape-6"></span>
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-9">
+                <div class="hero-content">
+                    <h2 class="section-title pb-2 fs-24 lh-34">Trouvez la meilleure réponse à votre question technique</h2>
+                </div><!-- end hero-content -->
+            </div><!-- end col-lg-9 -->
+            <div class="col-lg-3">
+                <div class="hero-btn-box text-right py-3">
+                    <a href="ask.html" class="btn theme-btn theme-btn-outline">Posez une question</a>
+                </div>
+            </div>
+        </div><!-- end row -->
+    </div><!-- end container -->
+</section>
+<!--======================================
+        END HERO AREA
+======================================-->
+
+<!-- ================================
+         START QUESTION AREA
+================================= -->
+<section class="question-area pt-40px pb-40px">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="question-main-bar mb-50px">
+                    <div class="question-highlight">
+                        <div class="media media-card shadow-none rounded-0 mb-0 bg-transparent p-0">
+                            <div class="media-body">
+                                <h5 class="fs-20">{{ question.titre }}</h5>
+                                <div class="meta d-flex flex-wrap align-items-center fs-13 lh-20 py-1">
+                                    <div class="pr-3">
+                                        <span>Publiée</span>
+                                        <span class="text-black">{{ question.createdAt | ago(locale="fr") }}</span>
+                                    </div>
+                                    <div class="pr-3">
+                                        <span>Auteur</span>
+                                        <span class="text-black">Nassim Bahri</span>
+                                    </div>
+                                    <div class="pr-3">
+                                        <span class="pr-1">{{ states[question.etat] }}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div><!-- end media -->
+                    </div><!-- end question-highlight -->
+                    <div class="question d-flex">
+                        <div class="votes votes-styled w-auto">
+                            <div id="vote" class="upvotejs">
+                                <a class="upvote upvote-on" data-toggle="tooltip" data-placement="right" title="This question is useful"></a>
+                                <span class="count">1</span>
+                                <a class="downvote" data-toggle="tooltip" data-placement="right" title="This question is not useful"></a>
+                                <a class="star" data-toggle="tooltip" data-placement="right" title="Bookmark this question."></a>
+                            </div>
+                        </div><!-- end votes -->
+                        
+                        <!-- question-post-body -->
+                        <div class="question-post-body-wrap flex-grow-1">
+                            <div class="question-post-body">
+                                {{ question.contenu | markdown_to_html }}
+                            </div>
+                            <!-- end question-post-body -->
+                        
+                        </div>
+                        <!-- end question-post-body-wrap -->
+                    </div>
+                    <!-- end question -->
+                    
+                    
+                    
+                    <!-- liste des réponses -->
+                    
+                    <div class="subheader d-flex align-items-center justify-content-between">
+                        <div class="subheader-title">
+                            <h3 class="fs-16">{{ reponses | length }} Réponse(s)</h3>
+                        </div>
+                    </div>
+                    
+                    
+                    {% for reponse in reponses %}
+                    <div class="answer-wrap d-flex">
+                        <!-- votes -->
+                        <div class="votes votes-styled w-auto">
+                            <div id="vote2" class="upvotejs">
+                                <a class="upvote upvote-on" data-toggle="tooltip" data-placement="right" title="This question is useful"></a>
+                                <span class="count">2</span>
+                                <a class="downvote" data-toggle="tooltip" data-placement="right" title="This question is not useful"></a>
+                                <a class="star check star-on" data-toggle="tooltip" data-placement="right" title="The question owner accepted this answer"></a>
+                            </div>
+                        </div>
+                        <!-- end votes -->
+                        
+                        
+                        <div class="answer-body-wrap flex-grow-1">
+
+
+                            <div class="media-body">
+                                <div class="meta d-flex flex-wrap align-items-center fs-13 lh-20 py-1">
+                                    <div class="pr-3">
+                                        <span>Publiée</span>
+                                        <span class="text-black">{{ reponse.createdAt | ago(locale="fr") }}</span>
+                                    </div>
+                                    <div class="pr-3">
+                                        <span>Auteur</span>
+                                        <span class="text-black">Nassim Bahri</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="answer-body">
+                                {{ reponse.contenu | markdown_to_html }}
+                            </div>
+                            <!-- end answer-body -->
+                            
+                            
+                        
+                        </div><!-- end answer-body-wrap -->
+                    </div><!-- end answer-wrap -->
+
+                    {% endfor %}
+
+
+
+                    <div class="subheader">
+                        <div class="subheader-title">
+                            <h3 class="fs-16">Votre réponse</h3>
+                        </div><!-- end subheader-title -->
+                    </div><!-- end subheader -->
+                    <div class="post-form">
+                        <form method="post" class="pt-3">
+                            <div class="input-box">
+                                <label class="fs-14 text-black lh-20 fw-medium">Body</label>
+                                <div class="form-group">
+                                    <textarea class="form-control form--control form-control-sm fs-13" name="message" rows="6" placeholder="Your answer here..."></textarea>
+                                    <div class="d-flex flex-wrap align-items-center pt-2">
+										<div class="badge bg-gray border border-gray mr-3 fw-regular fs-13">[named hyperlinks] (https://example.com)</div>
+										<div class="mr-3 fw-bold fs-13">**bold**</div>
+										<div class="mr-3 font-italic fs-13">_italic_</div>
+										<div class="mr-3">
+											``` <code class="badge bg-gray border border-gray text-gray">code</code> ```
+										</div>
+										<div></div>
+									</div>
+                                </div>
+                            </div>
+                            
+                            <button class="btn theme-btn theme-btn-sm" type="submit">Publier votre réponse</button>
+                        </form>
+                    </div>
+                </div><!-- end question-main-bar -->
+            </div><!-- end col-lg-9 -->
+        
+        </div><!-- end row -->
+    </div><!-- end container -->
+</section><!-- end question-area -->
+<!-- ================================
+         END QUESTION AREA
+================================= -->
 
 {% endblock %}

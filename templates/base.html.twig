@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
-    <title>Ask ESEN - Forum des étudiants inscrits à l'ESEN</title>
+    <title>{% block title %}Ask ESEN - Forum des étudiants inscrits à l'ESEN{% endblock %}</title>
 
     <!-- Google fonts -->
     <link href="https://fonts.googleapis.com/css2ba15.css?family=Ubuntu:wght@300;400;500;700&amp;display=swap" rel="stylesheet">
@@ -34,7 +34,7 @@
         <div class="row align-items-center">
             <div class="col-lg-2">
                 <div class="logo-box">
-                    <a href="index.html" class="logo"><img src="assets/images/logo.png" alt="logo"></a>
+                    <a href="{{ url("accueil") }}" class="logo"><img src="{{asset("assets/images/logo.png")}}" alt="logo"></a>
                     <div class="user-action">
                         <div class="search-menu-toggle icon-element icon-element-xs shadow-sm mr-1" data-toggle="tooltip" data-placement="top" title="Search">
                             <i class="la la-search"></i>
@@ -49,7 +49,7 @@
                 <div class="menu-wrapper border-left border-left-gray pl-4 justify-content-end">
                     <nav class="menu-bar mr-auto menu--bar">
                         <ul>
-                            <li><a href="index.html"><i class="la la-home mr-1 text-black"></i> Accueil</a></li>
+                            <li><a href="{{ url("accueil") }}"><i class="la la-home mr-1 text-black"></i> Accueil</a></li>
                             <li><a href="users.html"><i class="la la-user mr-1 text-black"></i> Utilisateurs</a></li>
                             <li><a href="categories.html"><i class="la la-sort mr-1 text-black"></i> Categories</a></li>
                             

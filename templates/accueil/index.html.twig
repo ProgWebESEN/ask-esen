@@ -55,7 +55,7 @@
                                 </div>
                             </div>
                             <div class="media-body">
-                                <h5 class="mb-2 fw-medium"><a href="question-details.html">{{ question.titre }}</a></h5>
+                                <h5 class="mb-2 fw-medium"><a href="{{ url("show_question", {"slug": question.titre | slug("-") | lower, "id": question.id}) }}">{{ question.titre }}</a></h5>
                                 <p class="mb-2 truncate lh-20 fs-15">{{ question.contenu | markdown_to_html }}</p>
                                 <div class="media media-card user-media align-items-center px-0 border-bottom-0 pb-0">
                                     <a href="" class="media-img d-block">

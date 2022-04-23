@@ -3,12 +3,18 @@
 namespace App\Controller;
 
 use App\Entity\Question;
+use App\Form\FormQuestionType;
 use App\Repository\QuestionRepository;
-use App\Repository\ReponseRepository;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 
 use function Symfony\Component\DependencyInjection\Loader\Configurator\ref;
 
@@ -46,5 +52,36 @@ class AccueilController extends AbstractController
             "states"=> Question::$states,
             "reponses"=> $reponses
         ]);
+    }
+
+    /**
+     * Permet de publier une question dans le formum
+     *
+     * @param Request $request requête http
+     * @return void
+     * 
+     * @Route("/create", name="create_question")
+     */
+    public function create(Request $request, EntityManagerInterface $manager, QuestionRepository $repo){
+        /*
+        // Code permettant la suppression d'une question
+        $question = $repo->find(16);
+        $manager->remove($question);
+        $manager->flush();
+        die();*/
+        $question = new Question();
+        $formQuestion = $this->createForm(FormQuestionType::class, $question);
+        $formQuestion->handleRequest($request);
+        if($formQuestion->isSubmitted() and $formQuestion->isValid()){
+            $question->setEtat(1);
+            $question->setCreatedAt(new \DateTime());
+            $manager->persist($question);
+            $manager->flush();
+            $this->addFlash("_message", "Votre question a bien été publiée");
+            return $this->redirectToRoute("create_question");
+        }
+        return $this->render("questions/create.html.twig", 
+            ["formQuestion"=>$formQuestion->createView(), "labelSubmit"=>"Publier votre question"]
+        );
     }
 }

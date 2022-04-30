@@ -13,8 +13,11 @@
                 Poser ses questions, apprendre, partager, grandir.
             </p>
             <div class="hero-btn-box py-4">
-                <a href="register.html" class="btn theme-btn mr-2">Rejoignez la communauté </a>
-                <a href="ask.html" class="btn theme-btn theme-btn-outline">Posez une question</a>
+                {% if not app.user %}
+                <a href="{{ url("register") }}" class="btn theme-btn mr-2">Rejoignez la communauté </a>
+                {% else %}
+                <a href="{{ url("create_question") }}" class="btn theme-btn theme-btn-outline">Posez une question</a>
+                {% endif %}
             </div>
         </div><!-- end hero-content -->
     </div><!-- end container -->
@@ -59,11 +62,11 @@
                                 <p class="mb-2 truncate lh-20 fs-15">{{ question.contenu | markdown_to_html }}</p>
                                 <div class="media media-card user-media align-items-center px-0 border-bottom-0 pb-0">
                                     <a href="" class="media-img d-block">
-                                        <img src="assets/images/avatar.jpg" alt="avatar">
+                                        <img src="https://ui-avatars.com/api/?name={{ question.user.nom }}&background=random" alt="avatar">
                                     </a>
                                     <div class="media-body d-flex flex-wrap align-items-center justify-content-between">
                                         <div>
-                                            <h5 class="pb-1"><a href="">Arden Smith</a></h5>
+                                            <h5 class="pb-1"><a href="">{{ question.user.nom }}</a></h5>
                                         </div>
                                         <small class="meta d-block text-right">
                                             <span class="text-black d-block lh-18">publiée</span>

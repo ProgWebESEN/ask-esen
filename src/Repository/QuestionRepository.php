@@ -47,4 +47,11 @@ class QuestionRepository extends ServiceEntityRepository
         ;
     }
     */
+
+    public function getQuestions(string $titre){
+        $query = $this->createQueryBuilder("question");
+        return $query->where(
+                    $query->expr()->like("question.titre", ":titre")
+                )->setParameter('titre', "%".$titre."%")->getQuery()->getResult();
+    }
 }

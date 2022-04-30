@@ -25,7 +25,7 @@
             </div><!-- end col-lg-9 -->
             <div class="col-lg-3">
                 <div class="hero-btn-box text-right py-3">
-                    <a href="ask.html" class="btn theme-btn theme-btn-outline">Posez une question</a>
+                    <a href="{{ url("create_question") }}" class="btn theme-btn theme-btn-outline">Posez une question</a>
                 </div>
             </div>
         </div><!-- end row -->
@@ -42,6 +42,9 @@
     <div class="container">
         <div class="row">
             <div class="col-lg-12">
+                {% for message in app.flashes("_message") %}
+                    <div class="alert alert-success">{{ message }}</div>
+                {% endfor %}
                 <div class="question-main-bar mb-50px">
                     <div class="question-highlight">
                         <div class="media media-card shadow-none rounded-0 mb-0 bg-transparent p-0">
@@ -121,7 +124,7 @@
                                     </div>
                                     <div class="pr-3">
                                         <span>Auteur</span>
-                                        <span class="text-black">Nassim Bahri</span>
+                                        <span class="text-black">{{ reponse.user.nom }}</span>
                                     </div>
                                 </div>
                             </div>
@@ -146,11 +149,13 @@
                         </div><!-- end subheader-title -->
                     </div><!-- end subheader -->
                     <div class="post-form">
-                        <form method="post" class="pt-3">
+                        {{ form_start(reponseForm, {"attr": {"class": "pt-3"}}) }}
                             <div class="input-box">
                                 <label class="fs-14 text-black lh-20 fw-medium">Body</label>
                                 <div class="form-group">
-                                    <textarea class="form-control form--control form-control-sm fs-13" name="message" rows="6" placeholder="Your answer here..."></textarea>
+                                    {{ form_errors(reponseForm.contenu) }}                       
+                                    {{ form_widget(reponseForm.contenu, {"attr": {"class": "form-control form--control form-control-sm fs-13", "placeholder": "Votre réponse..."}}) }}
+                                    
                                     <div class="d-flex flex-wrap align-items-center pt-2">
 										<div class="badge bg-gray border border-gray mr-3 fw-regular fs-13">[named hyperlinks] (https://example.com)</div>
 										<div class="mr-3 fw-bold fs-13">**bold**</div>
@@ -164,7 +169,7 @@
                             </div>
                             
                             <button class="btn theme-btn theme-btn-sm" type="submit">Publier votre réponse</button>
-                        </form>
+                        {{ form_end(reponseForm) }}
                     </div>
                 </div><!-- end question-main-bar -->
             </div><!-- end col-lg-9 -->

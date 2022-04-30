@@ -56,6 +56,11 @@ class Question
      */
     private $reponses;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="questions")
+     */
+    private $user;
+
     public function __construct()
     {
         $this->reponses = new ArrayCollection();
@@ -141,6 +146,18 @@ class Question
                 $reponse->setQuestion(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): self
+    {
+        $this->user = $user;
 
         return $this;
     }

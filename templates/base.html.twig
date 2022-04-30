@@ -62,8 +62,13 @@
                         </div>
                     </form>
                     <div class="nav-right-button">
-                        <a href="login.html" class="btn theme-btn theme-btn-sm theme-btn-outline mr-1">Se connecter</a>
-                        <a href="register.html" class="btn theme-btn theme-btn-sm">S'inscrire</a>
+                        {% if app.user %}
+                            Bonjour, {{ app.user.nom }}
+                            <a href="{{ url("logout") }}" class="btn theme-btn theme-btn-sm">Déconnexion</a>
+                        {% else %}
+                            <a href="{{ url("login") }}" class="btn theme-btn theme-btn-sm theme-btn-outline mr-1">Se connecter</a>
+                            <a href="{{ url("register") }}" class="btn theme-btn theme-btn-sm">S'inscrire</a>
+                        {% endif %}
                     </div><!-- end nav-right-button -->
                 </div>
             </div><!-- end col-lg-10 -->

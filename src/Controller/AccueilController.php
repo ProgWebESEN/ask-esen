@@ -13,9 +13,10 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use function Symfony\Component\DependencyInjection\Loader\Configurator\ref;
 
 class AccueilController extends AbstractController
@@ -61,6 +62,7 @@ class AccueilController extends AbstractController
      * @return void
      * 
      * @Route("/create", name="create_question")
+     * @IsGranted("ROLE_USER")
      */
     public function create(Request $request, EntityManagerInterface $manager, QuestionRepository $repo){
         /*
